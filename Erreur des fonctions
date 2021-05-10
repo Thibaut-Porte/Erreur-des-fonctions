@@ -1,0 +1,484 @@
+import math as m
+import matplotlib.pyplot as pp
+import numpy as np
+
+
+def Point_fixe(g,x0,e,Nitermax):
+    L_Pointfixe_n = []
+    xold= x0
+    xnew = g(xold)
+    difference = xnew - xold
+    xold = xnew
+    n = 1
+    L_Pointfixe_xn = []
+    L_Pointfixe_en = []
+    while abs(difference)>e and n< Nitermax :
+        xnew = g(xold)
+        difference = xnew-xold
+        xold = xnew
+        n =n+1
+        L_Pointfixe_n.append(n)
+        L_Pointfixe_xn.append(xold)
+        L_Pointfixe_en.append(abs(difference))
+    return L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en
+
+
+def newton (f,fder,x0,e,Nitermax):
+    xold= x0
+    xnew = xold-(f(xold)/fder(xold))
+    difference = xnew - xold
+    xold = xnew
+    n = 1
+    L_Newton_n = []
+    L_Newton_xn = []
+    L_Newton_en = []
+    while abs(difference)>e and n< Nitermax :
+        xnew = xold-(f(xold)/fder(xold))
+        difference = xnew-xold
+        xold = xnew
+        n =n+1
+        L_Newton_n.append(n)
+        L_Newton_xn.append(xold)
+        L_Newton_en.append(abs(difference))
+       
+    return L_Newton_n,L_Newton_xn,L_Newton_en
+
+def methode_dicotomie(f,a0,b0,e) :
+    n = 0
+    L_Dichotomie_n = []
+    L_Dichotomie_xn = []
+    L_Dichotomie_en = []
+    while b0 - a0 > e :
+        m = (a0+b0)/2
+        if f(a0)*f(m) <= 0 :
+            b0 = m  
+        else :
+            a0 = m
+        n = n+1
+        L_Dichotomie_n.append(n)
+        L_Dichotomie_xn.append(m)
+        L_Dichotomie_en.append(abs(b0-a0))
+    return L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en
+
+def Secante(f,x0,x1,epsilon,Nitermax):
+    n= 1
+    xold = x0
+    xoldold = x1
+    xnew = xoldold - (xoldold-xold)*f(xoldold)/(f(xoldold)-f(xold))
+    difference = xnew - xold
+    xold = xnew
+    L_Secante_n = []
+    L_Secante_xn = []
+    L_Secante_en = []
+    while abs(difference)>epsilon and n< Nitermax :
+        xnew = xoldold - (xoldold-xold)*f(xoldold)/(f(xoldold)-f(xold))
+        difference = xnew-xold
+        xold = xnew
+        n =n+1
+        L_Secante_n.append(n)
+        L_Secante_xn.append(xold)
+        L_Secante_en.append(abs(difference))
+
+    return L_Secante_n,L_Secante_xn,L_Secante_en
+def g1plus(x):
+    return m.sqrt(m.sqrt(9 - 3*x))
+def g1moins(x):
+    return -m.sqrt(m.sqrt(9 - 3*x))
+def g2plus(x):
+    return m.acos((x+2)/3)
+def g2moins(x):
+    return -m.acos((x+2)/3)
+def g3 (x):
+    return(m.log(7)-m.log(x))
+def g4plus(x):
+    return m.log(10 + x)
+def g4moins(x):
+    return -10+(m.exp(x))
+def g5(x):
+    return m.atan((x + 5)/2)
+def g6(x):
+    return m.log(x**2 + 3)
+def g7(x):
+    return (7 - 4*m.log(x))/3
+def g8plus(x):
+    return m.sqrt(m.sqrt(17 + 2*x**2 - 4*x))
+def g8moins(x):
+    return -m.sqrt(m.sqrt(17 + 2*x**2 - 4*x))
+def g9(x):
+    return m.log(2*m.sin(x) + 7)
+def g10(x):
+    return m.log(10/(m.log(x**2+4)))
+
+
+
+def f1(x):
+    return x**4+3*x-9
+def fder1(x):
+    return (4*x**3)+3
+
+def f2(x):
+    return x-3*m.cos(x)+2
+def fder2(x):
+    return 1+3*m.sin(x)
+
+def f3(x):
+    return x*m.exp(x)-7
+def fder3(x):
+    return (m.exp(x))*(x+1)
+
+def f4(x):
+    return m.exp(x) -x -10
+def fder4(x):
+    return m.exp(x) -1
+
+def f5(x):
+    return 2*m.tan(x)-x-5
+def fder5(x):
+    return 2/m.cos(x)**2-1
+
+def f6(x):
+    return m.exp(x)- x**2 - 3
+def fder6(x):
+    return m.exp(x)- 2*x
+
+def f7(x):
+    return 3*x+4*m.log(x)-7
+def fder7(x):
+    return 3 + (4/x)
+
+def f8(x):
+    return x**4 - 2*x**2 +4*x-17
+def fder8(x):
+    return 4*x**3 - 4*x +4
+
+def f9(x):
+    return m.exp(x)- 2*m.sin(x)- 7
+def fder9(x):
+    return m.exp(x)- 2*m.cos(x)
+
+def f10(x):
+    return (m.log(x**2 + 4))*(m.exp(x))- 10
+def fder10(x):
+    return ((2*x)/(x**4+4))*(m.exp(x))+ (m.log(x**2+4))*(m.exp(x))
+
+###1###
+"""
+# + #
+
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g1plus,3/2,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f1,fder1,1.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f1,1.5,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f1,1.5,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f1plus",fontsize=10)
+
+pp.show()
+"
+
+# - #
+
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g1plus,-3/2,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f1,fder1,-1.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f1,-1.5,-2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f1,-1.5,-2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f1moins",fontsize=10)
+
+pp.show()
+"""
+
+
+###2###
+"""
+# + #
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g2plus,0.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f2,fder2,1,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f2,0.5,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f2,1,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f2plus",fontsize=10)
+
+pp.show()
+
+# - #
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g2moins,-0.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f2,fder2,-0.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f2,-0.5,-2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f2,-0.5,-1,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f2moins",fontsize=10)
+
+pp.show()
+"""
+
+###3###
+"""
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g3,1.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f3,fder3,1.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f3,1.5,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f3,1.5,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f3",fontsize=10)
+pp.show()
+"""
+
+
+###4###
+"""
+# + #
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g4plus,3,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f4,fder4,3,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f4,2.5,3,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f4,3,4,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f4plus",fontsize=10)
+pp.show()
+
+# - #
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g4moins,-10,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f4,fder4,-10,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f4,-10,-9,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f4,-10,-9,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f4moins",fontsize=10)
+pp.show()
+"""
+
+"""
+
+###5###
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g5,2.1,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f5,fder5,2.1,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f5,1,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f5,1,1.9,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f5",fontsize=10)
+pp.show()
+
+
+
+
+###6###
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g6,1.9,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f6,fder6,1.9,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f6,1.8,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f6,1.9,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f6",fontsize=10)
+pp.show()
+
+
+
+###7###
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g7,1.9,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f7,fder7,1.9,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f7,1.5,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f7,1.9,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f7",fontsize=10)
+pp.show()
+"""
+
+###8###
+"""
+# + #
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g8plus,2.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f8,fder8,2.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f8,2,3,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f8,2.5,3,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f8plus",fontsize=10)
+pp.show()
+
+# - #
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g8moins,-2.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f8,fder8,-2.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f8,-2.5,-3,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f8,-2.5,-2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f8moins",fontsize=10)
+pp.show()
+"""
+
+###9###
+"""
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g9,2,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f9,fder9,2,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f9,2,3,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f9,2,3,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f9",fontsize=10)
+pp.show()
+
+
+###10###
+
+L_Pointfixe_n, L_Pointfixe_xn, L_Pointfixe_en = Point_fixe(g10,1.5,1e-10,100000)
+pp.semilogy(L_Pointfixe_n,L_Pointfixe_en)
+
+L_Newton_n,L_Newton_xn,L_Newton_en = newton (f10,fder10,1.5,1e-10,100000)
+pp.semilogy(L_Newton_n,L_Newton_en)
+
+L_Dichotomie_n, L_Dichotomie_xn, L_Dichotomie_en = methode_dicotomie(f10,1.5,2,1e-10)
+pp.semilogy(L_Dichotomie_n,L_Dichotomie_en)
+
+L_Secante_n,L_Secante_xn,L_Secante_en =  Secante(f10,1.5,2,1e-10,100000)
+pp.semilogy(L_Secante_n,L_Secante_en)
+
+
+pp.xlabel("n",fontsize=10)
+pp.ylabel("e_n",fontsize=10)
+pp.title("Evolution des erreurs de la fonction f10",fontsize=10)
+pp.show()
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
